@@ -1,0 +1,24 @@
+div{
+    margin: auto;
+    width:950px;
+    text-align: center;
+}
+
+div p{
+    
+    text-align: left;
+    height:23px;
+    line-height: 23px;
+    padding:5px 0 5px 15px;
+    margin:0;
+}
+
+.div_exemple{
+    background-color: rgba(51,154,16,0.3);
+    margin-top:15px;
+    margin-bottom:15px;
+}
+
+#para{
+    margin:0;
+}
