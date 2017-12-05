@@ -109,7 +109,7 @@ function addParagraphe(){
         frame.body.appendChild(new_p);
 
     }
-    
+    /*Modifier dans une branche*/
     var tabParagraphe = frame.getElementsByTagName('p');
     
     for(var i = 0 ; i < tabParagraphe.length ; i++){
