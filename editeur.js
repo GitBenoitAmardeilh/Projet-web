@@ -1,5 +1,5 @@
 var frame = document.getElementById('commentaire').contentDocument;
-
+var data_id_paragraphe_focus;
 /* Tableaux */
 
 var tabSousMenu = ['file','edit'];
@@ -95,51 +95,70 @@ var button_exemple = document.getElementById('button_exemple');
 function addParagraphe(){
 
     var new_p = document.createElement("p");  
-
-    new_p.id = 'para';
+    
     new_p.className = 'paragraphe';
     
     if(frame.body.firstChild == null){
         
         var textNode =  document.createTextNode('Commencer le cour ...'); 
-
-        new_p.setAttribute('data-id','0');
         new_p.appendChild(textNode);
+        
+        frame.body.appendChild(new_p);
 
     }
     else{
         
+        data_id_paragraphe_focus = parseInt(data_id_paragraphe_focus);
+        data_id_paragraphe_focus += 1;
+        
+        var after_para = frame.getElementById('para_'+data_id_paragraphe_focus);
         
         var baliseBR = document.createElement('br');
-        
         new_p.appendChild(baliseBR);
-        
-    }
-       
-    frame.body.appendChild(new_p);
-    
-    var tabParagraphe = frame.getElementsByTagName('p');
-    
-    for(var i = 0 ; i < tabParagraphe.length ; i++){
-        
-        if(tabParagraphe[i].focus){
-            //console.log('ok');
+
+        if(after_para == undefined){
+            frame.body.appendChild(new_p);
         }
-
-        tabParagraphe[i].setAttribute('data-id',i);
-        
-        if(tabParagraphe[i].focus){
-            
-            tabParagraphe[i].addEventListener('click', function(){
-
-                console.log(this.getAttribute('data-id'));
-
-            },false);
+        else{
+            frame.body.insertBefore(new_p, after_para);
         }
 
     }
+    
+    updateTabPara()
         
 }
+
+function updateTabPara(){
+    
+    var tabParagraphe = frame.getElementsByTagName('p');
+
+    for(var i = 0 ; i < tabParagraphe.length ; i++){
+
+        tabParagraphe[i].setAttribute('data-id',i);
+        tabParagraphe[i].setAttribute('id','para_'+i);
+        
+            
+        tabParagraphe[i].addEventListener('click', function(){
+
+            data_id_paragraphe_focus = this.getAttribute('data-id');
+            
+        },false);
+
+    }  
+    
+    /*
+    |-------------------------------------------------
+    | Met le focus sur l'élément créer
+    |-------------------------------------------------
+    | console.log('para_'+data_id_paragraphe_focus);
+    | var paraTest = frame.getElementById('para_'+data_id_paragraphe_focus);
+    | paraTest.focus();
+    | console.log(paraTest);
+    */
+    
+}
+
 /*Finir cette fonction */
 function removeParagraphe(){
 
