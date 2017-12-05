@@ -94,32 +94,51 @@ var button_exemple = document.getElementById('button_exemple');
 
 function addParagraphe(){
 
+    var new_p = document.createElement("p");  
+
+    new_p.id = 'para';
+    new_p.className = 'paragraphe';
+    
     if(frame.body.firstChild == null){
         
-        var new_p = document.createElement("p");  
-
-        new_p.id = 'para';
-        new_p.className = 'paragraphe';
-        
         var textNode =  document.createTextNode('Commencer le cour ...'); 
-        
-        new_p.setAttribute('data-id','1');
+
+        new_p.setAttribute('data-id','0');
         new_p.appendChild(textNode);
-        
-        frame.body.appendChild(new_p);
 
     }
+    else{
+        
+        
+        var baliseBR = document.createElement('br');
+        
+        new_p.appendChild(baliseBR);
+        
+    }
+       
+    frame.body.appendChild(new_p);
     
     var tabParagraphe = frame.getElementsByTagName('p');
     
     for(var i = 0 ; i < tabParagraphe.length ; i++){
         
-        console.log(tabParagraphe[i]);
+        if(tabParagraphe[i].focus){
+            //console.log('ok');
+        }
+
+        tabParagraphe[i].setAttribute('data-id',i);
         
+        if(tabParagraphe[i].focus){
+            
+            tabParagraphe[i].addEventListener('click', function(){
+
+                console.log(this.getAttribute('data-id'));
+
+            },false);
+        }
+
     }
-    
-    console.log(tabParagraphe.length);
-    
+        
 }
 /*Finir cette fonction */
 function removeParagraphe(){
@@ -144,7 +163,7 @@ function removeParagraphe(){
 
 function loadIframe(){
     commentaire.document.designMode = 'On';
-    addParagraphe()
+    addParagraphe();
     
 }
 
@@ -156,33 +175,18 @@ commentaire.addEventListener('keydown', function(e){
     switch(e.keyCode){
            
         case 8:
+            
             if(frame.body.firstChild.innerHTML == "<br>"){
                 removeParagraphe();
             }
             break;
             
-        case 13:
+        case 13:   
+            e.preventDefault();
             addParagraphe();
-            break;
-            
     }
-    
-    console.log('keyDown');
-    /*
-    if(e.keyCode == "13"){
-        addParagraphe();
-
-    }
-    
-    if(e.keyCode == "8"){
-        
-        if(frame.body.firstChild.innerHTML == "<br>"){
-            removeParagraphe();
-        }
-    }*/
 
 },true);
-
 
 button_g.addEventListener('click', function(){
     
@@ -257,6 +261,7 @@ for(var i = 0 ; i < tabMenuOptionDiv.length ; i++){
                     
                     mainDiv.className = 'div_'+mainNameA+' div_option';
                     /*
+                    maDiv.id = '';
                     maDiv = this;
                     this.id = 'div_focus'; */
                     
@@ -296,36 +301,3 @@ for(var i = 0 ; i < tabSousMenu.length ; i++){
     },false);
     
 }
-
-/*
-
-if(document.activeElement.id == 'button_'+mainNameA){
-
-                mainDiv.className = 'div_'+mainNameA+' div_option';
-
-                var tabDiv = frame.getElementsByClassName('div_'+mainNameA);
-                var i = 0;
-                var bcl_stop = 0;
-
-                while(i < tabDiv.length && bcl_stop == 0){
-                    
-                    tabDiv[i].addEventListener('click', function(){
-
-                        maDiv.id = '';
-                        maDiv = this;
-                        this.id = 'div_focus';
-
-                        button_exemple.style.background = 'rgb(230,230,230)';
-
-                    },false);
-
-                    tabDiv[i].addEventListener('blur', function(){
-                        alert('blur');
-                        button_exemple.style.background = 'white';
-
-                    },false);
-
-                    i++;        
-                }
-            }*/
-
