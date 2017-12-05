@@ -109,16 +109,8 @@ function addParagraphe(){
         frame.body.appendChild(new_p);
 
     }
-    /*Modifier dans une branche*/
-    var tabParagraphe = frame.getElementsByTagName('p');
-    
-    for(var i = 0 ; i < tabParagraphe.length ; i++){
-        
-        console.log(tabParagraphe[i]);
-        
-    }
-    
-    console.log(tabParagraphe.length);
+   
+    /*Cette fonction a été modifiée dans la branche tableau_paragraphe*/
     
 }
 /*Finir cette fonction */
