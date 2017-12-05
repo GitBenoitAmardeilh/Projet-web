@@ -1,5 +1,5 @@
 var frame = document.getElementById('commentaire').contentDocument;
-
+var data_id_paragraphe_focus;
 /* Tableaux */
 
 var tabSousMenu = ['file','edit'];
@@ -94,25 +94,71 @@ var button_exemple = document.getElementById('button_exemple');
 
 function addParagraphe(){
 
+    var new_p = document.createElement("p");  
+    
+    new_p.className = 'paragraphe';
+    
     if(frame.body.firstChild == null){
         
-        var new_p = document.createElement("p");  
-
-        new_p.id = 'para';
-        new_p.className = 'paragraphe';
-        
         var textNode =  document.createTextNode('Commencer le cour ...'); 
-        
-        new_p.setAttribute('data-id','1');
         new_p.appendChild(textNode);
         
         frame.body.appendChild(new_p);
 
     }
-   
-    /*Cette fonction a été modifiée dans la branche tableau_paragraphe*/
+    else{
+        
+        data_id_paragraphe_focus = parseInt(data_id_paragraphe_focus);
+        data_id_paragraphe_focus += 1;
+        
+        var after_para = frame.getElementById('para_'+data_id_paragraphe_focus);
+        
+        var baliseBR = document.createElement('br');
+        new_p.appendChild(baliseBR);
+
+        if(after_para == undefined){
+            frame.body.appendChild(new_p);
+        }
+        else{
+            frame.body.insertBefore(new_p, after_para);
+        }
+
+    }
+    
+    updateTabPara()
+        
+}
+
+function updateTabPara(){
+    
+    var tabParagraphe = frame.getElementsByTagName('p');
+
+    for(var i = 0 ; i < tabParagraphe.length ; i++){
+
+        tabParagraphe[i].setAttribute('data-id',i);
+        tabParagraphe[i].setAttribute('id','para_'+i);
+        
+            
+        tabParagraphe[i].addEventListener('click', function(){
+
+            data_id_paragraphe_focus = this.getAttribute('data-id');
+            
+        },false);
+
+    }  
+    
+    /*
+    |-------------------------------------------------
+    | Met le focus sur l'élément créer
+    |-------------------------------------------------
+    | console.log('para_'+data_id_paragraphe_focus);
+    | var paraTest = frame.getElementById('para_'+data_id_paragraphe_focus);
+    | paraTest.focus();
+    | console.log(paraTest);
+    */
     
 }
+
 /*Finir cette fonction */
 function removeParagraphe(){
 
@@ -136,7 +182,7 @@ function removeParagraphe(){
 
 function loadIframe(){
     commentaire.document.designMode = 'On';
-    addParagraphe()
+    addParagraphe();
     
 }
 
@@ -148,33 +194,18 @@ commentaire.addEventListener('keydown', function(e){
     switch(e.keyCode){
            
         case 8:
+            
             if(frame.body.firstChild.innerHTML == "<br>"){
                 removeParagraphe();
             }
             break;
             
-        case 13:
+        case 13:   
+            e.preventDefault();
             addParagraphe();
-            break;
-            
     }
-    
-    console.log('keyDown');
-    /*
-    if(e.keyCode == "13"){
-        addParagraphe();
-
-    }
-    
-    if(e.keyCode == "8"){
-        
-        if(frame.body.firstChild.innerHTML == "<br>"){
-            removeParagraphe();
-        }
-    }*/
 
 },true);
-
 
 button_g.addEventListener('click', function(){
     
@@ -249,6 +280,7 @@ for(var i = 0 ; i < tabMenuOptionDiv.length ; i++){
                     
                     mainDiv.className = 'div_'+mainNameA+' div_option';
                     /*
+                    maDiv.id = '';
                     maDiv = this;
                     this.id = 'div_focus'; */
                     
@@ -288,36 +320,3 @@ for(var i = 0 ; i < tabSousMenu.length ; i++){
     },false);
     
 }
-
-/*
-
-if(document.activeElement.id == 'button_'+mainNameA){
-
-                mainDiv.className = 'div_'+mainNameA+' div_option';
-
-                var tabDiv = frame.getElementsByClassName('div_'+mainNameA);
-                var i = 0;
-                var bcl_stop = 0;
-
-                while(i < tabDiv.length && bcl_stop == 0){
-                    
-                    tabDiv[i].addEventListener('click', function(){
-
-                        maDiv.id = '';
-                        maDiv = this;
-                        this.id = 'div_focus';
-
-                        button_exemple.style.background = 'rgb(230,230,230)';
-
-                    },false);
-
-                    tabDiv[i].addEventListener('blur', function(){
-                        alert('blur');
-                        button_exemple.style.background = 'white';
-
-                    },false);
-
-                    i++;        
-                }
-            }*/
-
