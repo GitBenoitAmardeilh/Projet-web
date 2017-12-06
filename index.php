@@ -60,10 +60,15 @@
                     <li><a href="#" id="a_color"></a>
 
                         <ul>
+                            <h3>Palette de couleurs</h3>
                             <li><a href="#" id="a_white" class="btn"></a></li>
+                            <li><a href="#" id="a_grey" class="btn"></a></li>
                             <li><a href="#" id="a_black" class="btn"></a></li>
                             <li><a href="#" id="a_red" class="btn"></a></li>
                             <li><a href="#" id="a_blue" class="btn"></a></li>
+                            <li><a href="#" id="a_green" class="btn"></a></li>
+                            <li><a href="#" id="a_yellow" class="btn"></a></li>
+                            <li><a href="#" id="a_orange" class="btn"></a></li>
                         </ul>
 
                     </li>

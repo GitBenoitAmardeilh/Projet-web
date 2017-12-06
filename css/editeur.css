@@ -1,5 +1,5 @@
 body{
-    margin: 0;
+    margin: 10px 0 0 5px;
 }
 
 div{
@@ -17,14 +17,25 @@ div p{
     margin:0;
 }
 
+.all_div_infos p{
+    
+    padding:0 0 0 10px;
+    
+}
+
 .div_exemple{
     background-color: rgba(51,154,16,0.3);
     margin-top:15px;
     margin-bottom:15px;
 }
 
+.div_information{
+    background-color: rgba(0,98,230,0.3);
+    margin-top:15px;
+    margin-bottom:15px;
+}
+
 .paragraphe{
-    background-color: red;
-    margin:0;
-    padding: 5px;
+    margin:0 0 1px 0;
+    padding: 2px;
 }

@@ -4,6 +4,7 @@ var data_id_paragraphe_focus;
 
 var tabSousMenu = ['file','edit'];
 var tabMenuOptionDiv = ['exemple','information','question'];
+var tabColor = ['white','grey','black','red','blue','green','yellow','orange'];
 
 /* Boutons édition */
 
@@ -29,6 +30,17 @@ var button_blue = document.getElementById('a_bleu');
 
 var button_exemple = document.getElementById('button_exemple');
 
+function loadIframe(){
+    frame.designMode = 'On';
+    addParagraphe();
+}
+
+frame.addEventListener('click',function(){
+    
+    updateTabElm();
+    
+},false);
+
 /*
 |-------------------------------------------------
 |création menu
@@ -38,12 +50,10 @@ var button_exemple = document.getElementById('button_exemple');
 
 (function(){
     
-    var tab_color = ['black','white','red','blue'];
-    
-    for(var i = 0 ; i < tab_color.length ; i++){
+    for(var i = 0 ; i < tabColor.length ; i++){
         
-        var var_color = document.getElementById('a_'+tab_color[i]);
-        var_color.className = tab_color[i];
+        var var_color = document.getElementById('a_'+tabColor[i]);
+        var_color.className = tabColor[i];
     }
     
 })(); 
@@ -93,12 +103,11 @@ var button_exemple = document.getElementById('button_exemple');
 */
 
 function addParagraphe(){
-
-    var new_p = document.createElement("p");  
-    
-    new_p.className = 'paragraphe';
     
     if(frame.body.firstChild == null){
+        
+        var new_p = document.createElement("p");
+        new_p.className = 'paragraphe';
         
         var textNode =  document.createTextNode('Commencer le cour ...'); 
         new_p.appendChild(textNode);
@@ -106,46 +115,35 @@ function addParagraphe(){
         frame.body.appendChild(new_p);
 
     }
-    else{
-        
-        data_id_paragraphe_focus = parseInt(data_id_paragraphe_focus);
-        data_id_paragraphe_focus += 1;
-        
-        var after_para = frame.getElementById('para_'+data_id_paragraphe_focus);
-        
-        var baliseBR = document.createElement('br');
-        new_p.appendChild(baliseBR);
-
-        if(after_para == undefined){
-            frame.body.appendChild(new_p);
-        }
-        else{
-            frame.body.insertBefore(new_p, after_para);
-        }
-
-    }
     
-    updateTabPara()
+    updateTabElm()
         
 }
 
-function updateTabPara(){
-    
-    var tabParagraphe = frame.getElementsByTagName('p');
+/*
+|-------------------------------------------------
+|Fonction mise a jour
+|-------------------------------------------------
+| Cette fonction met à jour le tableau tabParagraphes avec les nouveaux éléments ajouter
+*/
 
-    for(var i = 0 ; i < tabParagraphe.length ; i++){
+function updateTabElm(){
+     
+    var tabParagraphes = frame.getElementsByTagName('p');
 
-        tabParagraphe[i].setAttribute('data-id',i);
-        tabParagraphe[i].setAttribute('id','para_'+i);
+    for(var i = 0 ; i < tabParagraphes.length ; i++){
         
-            
-        tabParagraphe[i].addEventListener('click', function(){
+        tabParagraphes[i].setAttribute('data-id',i);
+        tabParagraphes[i].setAttribute('id','para_'+i);
+
+        tabParagraphes[i].addEventListener('click', function(){
 
             data_id_paragraphe_focus = this.getAttribute('data-id');
-            
+
         },false);
 
     }  
+
     
     /*
     |-------------------------------------------------
@@ -164,7 +162,7 @@ function removeParagraphe(){
 
     var allPara = frame.getElementsByClassName('paragraphe');
     var allDiv = frame.getElementsByClassName('div_option');
-    
+
     if(allPara.length == 1){
         
         if(allDiv.length == 0){
@@ -180,68 +178,71 @@ function removeParagraphe(){
 
 /**************************************************/
 
-function loadIframe(){
-    commentaire.document.designMode = 'On';
-    addParagraphe();
-    
-}
-
 /* Permet de créer une nouvelle balise paragraphe si l'utilisateur supprime
 tout le contenu de son texte*/
 
-commentaire.addEventListener('keydown', function(e){  
-    
+frame.addEventListener('keydown', function(e){  
+
     switch(e.keyCode){
            
         case 8:
-            
             if(frame.body.firstChild.innerHTML == "<br>"){
                 removeParagraphe();
             }
             break;
             
-        case 13:   
-            e.preventDefault();
-            addParagraphe();
+        case 13:
+            /* Car l'ajout du paragraphe est effèctué aprés que les actions suivante soit effectuées */
+            
+            data_id_paragraphe_focus = parseInt(data_id_paragraphe_focus) + 1;
+            break;
+     
     }
 
 },true);
 
 button_g.addEventListener('click', function(){
     
-    commentaire.document.execCommand('bold',false,null);
+    frame.execCommand('bold',false,null);
     
 },false);
 
 button_i.addEventListener('click', function(){
     
-    commentaire.document.execCommand('italic',false,null);
+    frame.execCommand('italic',false,null);
     
 },false);
 
 button_u.addEventListener('click', function(){
     
-    commentaire.document.execCommand('underline',false,null);
+    frame.execCommand('underline',false,null);
     
 },false);
 
 button_justifyLeft.addEventListener('click', function(){
     
-    commentaire.document.execCommand('justifyLeft',false,null);
+    frame.execCommand('justifyLeft',false,null);
     
 },false);
 
 button_justifyRight.addEventListener('click', function(){
     
-    commentaire.document.execCommand('justifyRight',false,null);
+    frame.execCommand('justifyRight',false,null);
     
 },false);
 
 button_justifyCenter.addEventListener('click', function(){
     
-    commentaire.document.execCommand('justifyCenter',false,null);
+    frame.execCommand('justifyCenter',false,null);
     
 },false);
+
+/*
+|-------------------------------------------------
+| Boucle menu informations
+|-------------------------------------------------
+| Permet d'assigner une action aux boutons infos
+*/
 
 for(var i = 0 ; i < tabMenuOptionDiv.length ; i++){
 
@@ -251,45 +252,30 @@ for(var i = 0 ; i < tabMenuOptionDiv.length ; i++){
 
     listOptionDiv[i].addEventListener('click', function(){
         
+        updateTabElm();
+        
         mainNameA = this;
         mainNameA = mainNameA.id.slice(7);
-    
-        if(frame.getElementById('div_focus')){
-            alert('element focus (div_focus)');
+        
+        var elementFocus = frame.getElementById('para_'+data_id_paragraphe_focus);
+        console.log('para_'+data_id_paragraphe_focus);
+
+        if(elementFocus.parentNode.className == 'div_'+mainNameA){
+            var divParent = elementFocus.parentNode;
+            frame.body.replaceChild(elementFocus,divParent);
         }
         else{
             
-            var lastParagraphe = frame.lastChild;
-            console.log(lastParagraphe.nodeValue);
-
             var mainDiv = document.createElement('div');
 
-            var paraP = document.createElement('p');
-                paraP.id = 'para_850';
-            var balBr = document.createElement('br');
-
-            var maDiv = '';
-
-            paraP.appendChild(balBr);
-            mainDiv.appendChild(paraP);
-
-            if(frame.body.appendChild(mainDiv)){
-                
-                if(document.activeElement.id == 'button_'+mainNameA){
-                    
-                    
-                    mainDiv.className = 'div_'+mainNameA+' div_option';
-                    /*
-                    maDiv.id = '';
-                    maDiv = this;
-                    this.id = 'div_focus'; */
-                    
-                    var paraFocus = frame.getElementById('para_850').focus;
-                }
-            }
+            frame.body.insertBefore(mainDiv,elementFocus);
+            
+                mainDiv.appendChild(elementFocus);
+                mainDiv.className = 'div_'+mainNameA+' all_div_infos';
         }
+
+            
     },false);
-    
 }
 
 
@@ -300,7 +286,7 @@ for(var i = 0 ; i < tabSousMenu.length ; i++){
     listLi[i] = document.getElementById('button_'+tabSousMenu[i]);
     
     listLi[i].addEventListener('click', function(){
-
+        
         mainLi = this;
         mainLi.className = 'actionClicMenu';
         mainLi = mainLi.id.slice(7);
@@ -317,6 +303,32 @@ for(var i = 0 ; i < tabSousMenu.length ; i++){
         var openUl = document.getElementById('ul_'+mainLi);
         openUl.className = 'masquerMenu';
 
+    },false);
+    
+}
+
+/*
+|-------------------------------------------------
+| Boucle Couleur
+|-------------------------------------------------
+| Permet d'assigner une action aux boutons couleur
+*/
+
+for(var i = 0 ; i < tabColor.length ; i++){
+    
+    var tabAColor = [tabColor.length];
+    
+    tabAColor[i] = document.getElementById('a_'+tabColor[i]);
+    tabAColor[i].addEventListener('click', function(){
+        
+        var btnfirstColor = document.getElementById('a_color');
+        
+        mainAColor = this;
+        mainAColor = mainAColor.id.slice(2);
+        
+        frame.execCommand('foreColor',false,mainAColor);
+        btnfirstColor.style.background = mainAColor;
+        
     },false);
     
 }
