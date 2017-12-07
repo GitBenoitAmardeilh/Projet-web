@@ -16,17 +16,18 @@
             
                 <li><a href="#" id="button_file">Fichier</a>
                 
-                    <ul id="ul_file" class="listLi">
+                    <ul id="ul_file">
                         
                         <li><a href="#">Ouvrir</a></li>
                         <li><a href="#">Enregistré</a></li>
                         <li><a href="#">Nouveau projet</a></li>
+                        <li><a href="#" id="print">Imprimé</a></li>
                     
                     </ul>
                     
                 </li>
                 
-                <li><a href="#" id="button_edit" class="listLi">Edit</a>
+                <li><a href="#" id="button_edit">Edit</a>
                 
                     <ul id="ul_edit">
                         

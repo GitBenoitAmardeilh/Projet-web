@@ -10,9 +10,6 @@ var tabColor = ['white','grey','black','red','blue','green','yellow','orange'];
 
 var aside_edition = document.getElementById('menu_edition');
 
-var button_file = document.getElementById('button_file');
-var button_edit = document.getElementById('button_edit');
-
 /* Boutons éditeur */
 
 var button_g = document.getElementById('button_g');
@@ -23,10 +20,6 @@ var button_justifyRight = document.getElementById('button_JRight');
 var button_justifyCenter = document.getElementById('button_JCenter');
 
 var button_color = document.getElementById('a_color');
-var button_white = document.getElementById('a_blanc');
-var button_black = document.getElementById('a_noir');
-var button_red = document.getElementById('a_rouge');
-var button_blue = document.getElementById('a_bleu');
 
 var button_exemple = document.getElementById('button_exemple');
 
@@ -65,6 +58,7 @@ frame.addEventListener('click',function(){
 | Cette fonction permet de masquer les sous menu du menu déroulant
 
 */
+
 (function(){
     
     for(var i = 0 ; i < tabSousMenu.length ; i++){
@@ -73,6 +67,20 @@ frame.addEventListener('click',function(){
         ulDisplayNone.className = 'masquerMenu';
         
     }
+    
+})();
+
+/*
+|-------------------------------------------------
+| Créer le bouton de couleur
+|-------------------------------------------------
+| Créer le bouton principal de couleur
+
+*/
+
+(function(){
+    
+    button_color.className = 'black';
     
 })();
 
@@ -291,25 +299,28 @@ for(var i = 0 ; i < tabSousMenu.length ; i++){
         mainLi.className = 'actionClicMenu';
         mainLi = mainLi.id.slice(7);
         var openUl = document.getElementById('ul_'+mainLi);
-        openUl.className = 'activeMenu';
+        openUl.style.display = 'block';
+            
 
     },false);
     
     listLi[i].addEventListener('blur', function(){
-
+        
         mainLi = this;
         mainLi.className = '';
         mainLi = mainLi.id.slice(7);
         var openUl = document.getElementById('ul_'+mainLi);
-        openUl.className = 'masquerMenu';
-
-    },false);
+        openUl.style.display = 'none';
+        
+    },false)
+    
+    
     
 }
 
 /*
 |-------------------------------------------------
-| Boucle Couleur
+| Boucle palette couleur et bouton couleur principal
 |-------------------------------------------------
 | Permet d'assigner une action aux boutons couleur
 */
@@ -327,8 +338,36 @@ for(var i = 0 ; i < tabColor.length ; i++){
         mainAColor = mainAColor.id.slice(2);
         
         frame.execCommand('foreColor',false,mainAColor);
-        btnfirstColor.style.background = mainAColor;
+        btnfirstColor.setAttribute('class',mainAColor);
         
     },false);
     
 }
+
+/***********************************
+     Bouton de couleur principal
+************************************/
+
+button_color.addEventListener('click', function(){
+    
+    var color = button_color.getAttribute('class');
+    console.log(color);
+    frame.execCommand('foreColor',false, color);
+    
+},false);
+
+/*
+|-------------------------------------------------
+| Impression
+|-------------------------------------------------
+| Ajout de la fonction d'impression
+*/
+
+var print = document.getElementById('print');
+
+print.addEventListener('click', function(){
+    
+    window.frames["commentaire"].focus();
+    window.frames["commentaire"].print();
+    
+},true);
