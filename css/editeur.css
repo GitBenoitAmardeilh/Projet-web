@@ -4,7 +4,7 @@ body{
 
 div{
     margin: auto;
-    width:950px;
+    width:850px;
     text-align: center;
 }
 
@@ -13,14 +13,7 @@ div p{
     text-align: left;
     height:23px;
     line-height: 23px;
-    padding:5px 0 5px 15px;
     margin:0;
-}
-
-.all_div_infos p{
-    
-    padding:0 0 0 10px;
-    
 }
 
 .div_exemple{

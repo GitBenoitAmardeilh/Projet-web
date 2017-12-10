@@ -23,6 +23,8 @@ aside{
     background-color: rgb(245,245,245);
 }
 
+textArea{ display: none; }
+
 /* ----------------------------------
 |   CLASSE JAVASCRIPT
  -----------------------------------*/
@@ -36,8 +38,6 @@ aside{
 .yellow{ background-color: yellow; }
 .orange{ background-color: orange; }
 
-.activeMenu{ display: block; }
-.masquerMenu{ display: none; }
 .actionClicMenu{ background-color: rgb(195,195,195); }
 
 /* ----------------------------------
@@ -50,14 +50,23 @@ article #menu_edition{
     
 }
 
+article #menu_edition a, #menu_editeur a, #menu_editeur ul{
+    cursor: default;
+}
+
 article #menu_edition div ul{
     
     position:absolute;
+    display: none;
     background-color: rgb(235,235,235);
     border:1px solid rgb(190,190,190);
     margin: 0;
     padding:10px 0 10px 0;
     
+}
+
+article #menu_edition div li:hover ul{
+    display: block;
 }
 
 article #menu_edition li{
@@ -93,6 +102,7 @@ article #menu_edition ul a{
 
 article #menu_edition ul a:hover{
     background-color: rgb(0,98,230);
+    display: block;
     color:white;
 }
 
@@ -153,6 +163,10 @@ article #menu_editeur ul li a{
     height: 18px;
 }
 
+article #menu_editeur ul li a:hover{
+    border:1px solid red;
+}
+
 /********************************/
 
 article #menu_editeur li{
@@ -182,9 +196,9 @@ article #menu_editeur img{
     display: block;
 }
 
-article #menu_editeur #button_g{ font-weight: bold; }
-article #menu_editeur #button_i{ font-style: italic; }
-article #menu_editeur #button_u{ text-decoration: underline; }
+article #menu_editeur #button_bold{ font-weight: bold; }
+article #menu_editeur #button_italic{ font-style: italic; }
+article #menu_editeur #button_underline{ text-decoration: underline; }
 
 iframe{
     width:100%;
